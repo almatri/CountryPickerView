@@ -141,7 +141,14 @@ open class CountrySelectView: UIView {
     public func show() {
         
         if let window = UIApplication.shared.delegate!.window! {
+            self.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+            self.backgroundColor = UIColor.black.withAlphaComponent(0)
             window.addSubview(self)
+
+            UIView.animate(withDuration: 0.3) {
+                self.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+            }
         }
         searchBarView.text = ""
         searchCountrys = CountryCodeJson
@@ -149,7 +156,11 @@ open class CountrySelectView: UIView {
         self.setLayout()
     }
     @objc public func dismiss() {
-        self.removeFromSuperview()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.transform = CGAffineTransform(translationX: 0, y: UIScreen.main.bounds.height)
+        }) { (_) in
+            self.removeFromSuperview()
+        }
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
